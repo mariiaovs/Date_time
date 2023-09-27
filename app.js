@@ -28,18 +28,21 @@ function formatTime(mode) {
 
 setInterval(update, 1000);
 
+function bindName(name) {
+    return function() {
+        timeMode = name;
+        update();
+    }
+}
 
 fullBtn.onclick = () => {    
-    timeMode = "full";
-    update();
+    bindName("full");
 }
 
 dateBtn.onclick = () => {    
-    timeMode = "date";
-    update();
+    bindName("date");    
 }
 
 timeBtn.onclick = () => {    
-    timeMode = "time";
-    update();
+    bindName("time");
 }
