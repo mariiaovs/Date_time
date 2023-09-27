@@ -6,34 +6,40 @@ const dateBtn = document.getElementById("date");
 
 const timeBtn = document.getElementById("time");
 
-let btnIsOn = false;
+let timeMode = "time";
 
-setInterval(function () {
+update();
 
+function update() {    
+    output.textContent = formatTime(timeMode);
+}
+
+function formatTime(mode) {
     const now = new Date();
-    if (!btnIsOn) {
-        output.innerHTML = now.toLocaleString();
-    } else output.innerHTML = formatTime(now);
-
-}, 1000);
-
-fullBtn.onclick = () => {
-    btnIsOn = true;
-    formatTime = function (time) {
-        return time.toLocaleString();
+    switch (mode) {
+        case "full":
+            return now.toLocaleString();
+        case "time":
+            return now.toLocaleTimeString();
+        case "date":
+            return now.toLocaleDateString();
     }
 }
 
-dateBtn.onclick = () => {
-    btnIsOn = true;
-    formatTime = function (time) {
-        return time.toLocaleDateString();
-    }
+setInterval(update, 1000);
+
+
+fullBtn.onclick = () => {    
+    timeMode = "full";
+    update();
 }
 
-timeBtn.onclick = () => {
-    btnIsOn = true;
-    formatTime = function (time) {
-        return time.toLocaleTimeString();
-    }
+dateBtn.onclick = () => {    
+    timeMode = "date";
+    update();
+}
+
+timeBtn.onclick = () => {    
+    timeMode = "time";
+    update();
 }
